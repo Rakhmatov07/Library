@@ -8,11 +8,8 @@ export function runAssociation(){
     Category.hasMany(Book, { foreignKey: 'category_id' });
     Book.belongsTo(Category, { foreignKey: "category_id" });
 
-    AuthorBook.hasMany(Book, { foreignKey: "book_id" });
-    AuthorBook.hasMany(Author, { foreignKey: "author_id" });
-
-    Book.belongsToMany(Author, { through: AuthorBook });
-    Author.belongsToMany(Book, { through: AuthorBook });
+    Book.belongsToMany(Author, { through: AuthorBook }, { foreignKey: "bookId" });
+    Author.belongsToMany(Book, { through: AuthorBook }, { foreignKey: "authorId" });
 }
 
 
