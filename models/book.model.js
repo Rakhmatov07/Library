@@ -1,45 +1,46 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import { sequelize } from "../database/index.js";
+import { Model, DataTypes } from "sequelize";
 
-const Book = new Schema({
+class Book extends Model{};
+
+Book.init({
+    bookId: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     title: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     pages: {
-        type: Number,
-        required: true
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     year: {
-        type: Number,
-        required: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
         min: 1800,
         max: new Date().getFullYear(),  
     },
     price: {
-        type: Schema.Types.Decimal128,
-        required: true
+        type: DataTypes.FLOAT,
+        allowNull: false
     },
     country: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     description: {
-        type: String,
-        required: true,
-        minlength: 3
-    },
-    author_id: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
-    category_id: {
-        type: Schema.Types.ObjectId,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false,
+        min: 3
     }
 },
 {
-    timestamps: true
+    timestamps: true,
+    sequelize,
+    modelName: "books"
 });
 
-export default model('Book', Book);
+export default Book;

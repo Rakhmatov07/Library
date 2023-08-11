@@ -1,33 +1,43 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import { Model, DataTypes } from "sequelize";
+import { sequelize } from "../database/index.js";
 
-const Author = new Schema({
+class Author extends Model{};
+
+Author.init({
+    authorId: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     firstname: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     lastname: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     date_of_birth: {
-        type: Date,
-        required: true
+        type: DataTypes.DATE,
+        allowNull: false
     },
     date_of_death: {
-        type: Date,
+        type: DataTypes.DATE,
+        allowNull: true
     },
     country: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     bio: {
-        type: String,
-        required: true,
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 },
 {
-    timestamps: true
+    sequelize,
+    timestamps: true,
+    modelName: "authors"
 });
 
-export default model('Author', Author);
+export default Author;

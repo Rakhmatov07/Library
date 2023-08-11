@@ -1,12 +1,24 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import { sequelize } from "../database/index.js";
+import { Model, DataTypes } from "sequelize";
 
-const Category = new Schema({
+class Category extends Model{};
+
+Category.init({
+    categoryId: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     name: {
-        type: String,
+        type: DataTypes.STRING,
         unique: true,
-        required: true
+        allowNull: false
     }
+},
+{
+    sequelize,
+    modelName: "categories",
+    timestamps: true
 });
 
-export default model('Category', Category);
+export default Category;

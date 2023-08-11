@@ -10,18 +10,18 @@ export const searchBooks = async(req, res, next) => {
 
         if(author){
             searchCriteria.author = { $regex: author, $options: 'i'};
-            searchResult = await Author.find({ firstname: searchCriteria.author }).limit(12);
+            searchResult = await Author.findAll({ where: { firstname: searchCriteria.author }, limit: 12});
         } 
         if(book){
             searchCriteria.book = { $regex: book, $options: 'i' };
-            searchResult = await Book.find({ title: searchCriteria.book }).limit(12);
+            searchResult = await Book.findAll({ where: { title: searchCriteria.book }, limit: 12 });
         } 
     
         if(searchResult.length === 0){
             throw new CustomError('Not Found', 404);
         };
     
-        return res.status(200).json({ searchResult });
+        res.status(200).json({ searchResult });
     } catch (error) {
         next(error);
     }
